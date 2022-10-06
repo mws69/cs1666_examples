@@ -19,6 +19,7 @@ fn main() {
 		.insert_resource(ClearColor(Color::CYAN))
 		.add_plugins(DefaultPlugins)
 		.add_startup_system(setup)
+		.add_system(keyboard_input)
 		.run();
 }
 
@@ -34,3 +35,22 @@ fn setup(mut commands: Commands) {
 // Don't forget to add your system to the app in `main()`!
 
 //<Your code here>
+
+fn keyboard_input(
+    mut commands: Commands,
+    keys: Res<Input<KeyCode>>,
+) {
+    if keys.just_pressed(KeyCode::W) {
+        commands.insert_resource(ClearColor(Color::RED));
+    }
+    if keys.just_pressed(KeyCode::A) {
+        commands.insert_resource(ClearColor(Color::GREEN));
+    }
+    if keys.just_pressed(KeyCode::S) {
+        commands.insert_resource(ClearColor(Color::BLUE));
+    }
+    if keys.just_pressed(KeyCode::D) {
+        commands.insert_resource(ClearColor(Color::FUCHSIA));
+    }
+
+   }

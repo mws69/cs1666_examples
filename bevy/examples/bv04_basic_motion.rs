@@ -7,6 +7,8 @@ const TITLE: &str = "bv03 Basic Motion";
 const WIN_W: f32 = 1280.;
 const WIN_H: f32 = 720.;
 const PLAYER_SZ: f32 = 32.;
+const MAG_ACC: f32 = 20.;
+const SPEED: f32 = 5.;
 
 #[derive(Component)]
 struct Player;
@@ -39,6 +41,8 @@ fn setup(mut commands: Commands) {
 			},
 			..default()
 		})
+		.insert(Acceleration(Vec2::new(0.,0.)))
+		.insert(Velocity(Vec2::new(0.,0.)))
 		.insert(Player);
 }
 
@@ -77,3 +81,40 @@ fn move_player(
  * How do we stay inside the window?
  * How do we avoid breaking the speed limit on the diagonal?
  */
+
+fn move_player_v2(
+	mut commands: Commands,
+        input: Res<Input<KeyCode>>,
+        mut player: Query<&mut Transform, With<Player>>,
+){
+        let mut player_transform = player.single_mut();
+
+        let mut x_vel = 0.;
+        let mut y_vel = 0.;
+
+        if input.pressed(KeyCode::A) {
+		x_vel -= 5.;
+		p = 1;
+        }
+
+        if input.pressed(KeyCode::D) {
+                x_vel += 5.;
+		p = 1;
+        }
+
+        if input.pressed(KeyCode::W) {
+                y_vel += 5.;
+		p = 1;
+        }
+
+        if input.pressed(KeyCode::S) {
+                y_vel -= 5.;
+		p = 1;
+        }
+
+	if(p != 1){
+			
+	}
+        player_transform.translation.x += x_vel;
+        player_transform.translation.y += y_vel;
+}
